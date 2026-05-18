@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entretien CLIO 4</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 20px 25px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 20px solid #764ba2;
+        }
+
+        .app-title {
+            font-size: 3em;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            background: linear-gradient(to right, #fff, #e0d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .app-subtitle {
+            font-size: 1em;
+            font-weight: 400;
+            opacity: 0.85;
+            letter-spacing: 2px;
+        }
+
+        /* ===== MAIN NAV ===== */
+        .main-nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            padding: 35px 20px 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 15px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.05em;
+            font-weight: 700;
+            color: #fff;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0));
+            pointer-events: none;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .nav-btn .icon {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .btn-docs { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .btn-parts { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .btn-oil { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .btn-notes { background: linear-gradient(135deg, #fa709a, #fee140); }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            display: none;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            font-size: 1.3em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .card-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== INPUTS ===== */
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85em;
+            opacity: 0.8;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 2px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95em;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: rgba(255,255,255,0.4);
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+
+        .input-group input::placeholder, .input-group textarea::placeholder {
+            color: rgba(255,255,255,0.35);
+        }
+
+        .date-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .date-row .input-group {
+            flex: 1;
+        }
+
+        /* ===== BUTTONS ===== */
+        .save-btn {
+            width: 100%;
+            padding: 13px;
+            border-radius: 14px;
+            border: none;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 5px;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .save-pink { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .save-blue { background: linear-gradient(135deg, #4facfe, #00c6fb); }
+        .save-green { background: linear-gradient(135deg, #43e97b, #38d9a9); }
+        .save-yellow { background: linear-gradient(135deg, #f6d365, #fda085); }
+
+        /* ===== FAB ===== */
+        .fab {
+            position: fixed;
+            bottom: 80px;
+            left: 25px;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.8em;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+            transition: all 0.3s;
+            z-index: 100;
+            display: none;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .fab-blue { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .fab-green { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .fab-yellow { background: linear-gradient(135deg, #fa709a, #fee140); }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            border-radius: 24px;
+            padding: 28px;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: modalIn 0.35s ease;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.85) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-cancel {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* ===== LIST ITEMS ===== */
+        .list-container {
+            margin-top: 10px;
+        }
+
+        .list-item {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .list-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .list-item .item-name {
+            font-weight: 700;
+            font-size: 1.05em;
+            margin-bottom: 6px;
+        }
+
+        .list-item .item-detail {
+            font-size: 0.82em;
+            opacity: 0.7;
+            margin-bottom: 3px;
+        }
+
+        .list-item .item-detail span {
+            margin-left: 15px;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(255,70,70,0.2);
+            border: none;
+            color: #ff6b6b;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: rgba(255,70,70,0.4);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0.4;
+            font-size: 0.95em;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        /* ===== DOCS SECTION ===== */
+        .doc-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .doc-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .doc-icon {
+            font-size: 1.4em;
+        }
+
+        .doc-record {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            border-right: 3px solid;
+        }
+
+        .doc-record.insurance { border-right-color: #f093fb; }
+        .doc-record.scanner { border-right-color: #4facfe; }
+
+        .doc-record .doc-dates {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .doc-record .doc-dates span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .doc-record .doc-delete {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 0.85em;
+            margin-top: 8px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .doc-record .doc-delete:hover {
+            background: rgba(255,70,70,0.2);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 0.8em;
+            opacity: 0.5;
+            line-height: 1.8;
+        }
+
+        .footer .brand {
+            font-weight: 700;
+            font-size: 1em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.15);
+            border-radius: 3px;
+        }
+
+        /* ===== BADGE ===== */
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            background: rgba(67,233,123,0.2);
+            color: #43e97b;
+        }
+
+        .badge-expired {
+            background: rgba(255,107,107,0.2);
+            color: #ff6b6b;
+        }
+
+        /* Responsive */
+        @media (max-width: 380px) {
+            .app-title { font-size: 2.3em; }
+            .main-nav { gap: 12px; padding: 30px 15px 15px; }
+            .nav-btn { padding: 22px 10px; font-size: 0.95em; }
+            .nav-btn .icon { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <div class="app-title">CLIO 4</div>
+    <div class="app-subtitle">Entretien & Maintenance</div>
+</div>
+
+<!-- ===== MAIN NAVIGATION ===== -->
+<div id="mainPage" class="section active">
+    <div class="main-nav">
+        <button class="nav-btn btn-docs" onclick="showSection('docs')">
+            <span class="icon">📄</span>
+            وثائقي
+        </button>
+        <button class="nav-btn btn-parts" onclick="showSection('parts')">
+            <span class="icon">🔧</span>
+            قطع الغيار
+        </button>
+        <button class="nav-btn btn-oil" onclick="showSection('oil')">
+            <span class="icon">🛢️</span>
+            تبديل الزيت
+        </button>
+        <button class="nav-btn btn-notes" onclick="showSection('notes')">
+            <span class="icon">📝</span>
+            ملاحظات
+        </button>
+    </div>
+    <div class="footer">
+        أنشئ من طرف <span class="brand">عيمر عماد الدين</span><br>
+        ai.dz technologie
+    </div>
+</div>
+
+<!-- ===== DOCUMENTARY SECTION ===== -->
+<div id="docsSection" class="section">
+    <div class="section-header">
+        <button class="back-btn" onclick="showSection('main')">→</button>
+        <span class="section-title">📄 وثائقي</span>
+    </div>
+
+    <!-- Insurance Card -->
+    <div class="doc-card">
+        <div class="doc-card-header">
+            <span class="doc-icon">🛡️</span>
+            شهادة التأمين
+        </div>
+        <div class="input-group">
+            <label>تبدأ</label>
+            <input type="date" id="insStart">
+        </div>
+        <div class="input-group">
+            <label>تنتهي</label>
+            <input type="date" id="insEnd">
+        </div>
+        <button class="save-btn save-pink" onclick="saveInsurance()">💾 حفظ</button>
+        <div id="insuranceList" class="list-container"></div>
+    </div>
+
+    <!-- Scanner Card -->
+    <div class="doc-card">
+        <div class="doc-card-header">
+            <span class="doc-icon">🔍</span>
+            سكانير
+        </div>
+        <div class="input-group">
+            <label>تبدأ</label>
+            <input type="date" id="scanStart">
+        </div>
+        <div class="input-group">
+            <label>تنتهي</label>
+            <input type="date" id="scanEnd">
+        </div>
+        <button class="save-btn save-blue" onclick="saveScanner()">💾 حفظ</button>
+        <div id="scannerList" class="list-container"></div>
+    </div>
+
+    <div class="footer">
+        أنشئ من طرف <span class="brand">عيمر عماد الدين</span><br>
+        ai.dz technologie
+    </div>
+</div>
+
+<!-- ===== SPARE PARTS SECTION ===== -->
+<div id="partsSection" class="section">
+    <div class="section-header">
+        <button class="back-btn" onclick="showSection('main')">→</button>
+        <span class="section-title">🔧 قطع الغيار</span>
+    </div>
+    <div id="partsList" class="list-container"></div>
+    <button class="fab fab-blue" id="fabParts" onclick="openModal('partsModal')">+</button>
+</div>
+
+<!-- ===== OIL CHANGE SECTION ===== -->
+<div id="oilSection" class="section">
+    <div class="section-header">
+        <button class="back-btn" onclick="showSection('main')">→</button>
+        <span class="section-title">🛢️ تبديل الزيت</span>
+    </div>
+    <div id="oilList" class="list-container"></div>
+    <button class="fab fab-green" id="fabOil" onclick="openModal('oilModal')">+</button>
+</div>
+
+<!-- ===== NOTES SECTION ===== -->
+<div id="notesSection" class="section">
+    <div class="section-header">
+        <button class="back-btn" onclick="showSection('main')">→</button>
+        <span class="section-title">📝 ملاحظات</span>
+    </div>
+    <div id="notesList" class="list-container"></div>
+    <button class="fab fab-yellow" id="fabNotes" onclick="openModal('notesModal')">+</button>
+</div>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Add Part Modal -->
+<div class="modal-overlay" id="partsModal">
+    <div class="modal">
+        <div class="modal-title">🔧 إضافة قطعة غيار</div>
+        <div class="input-group">
+            <label>اسم قطعة الغيار</label>
+            <input type="text" id="partName" placeholder="مثال: فلتر الهواء">
+        </div>
+        <div class="input-group">
+            <label>تاريخ التبديل</label>
+            <input type="date" id="partDate">
+        </div>
+        <div class="input-group">
+            <label>الكيلومتر</label>
+            <input type="number" id="partKm" placeholder="مثال: 85000">
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('partsModal')">إلغاء</button>
+            <button class="save-btn save-blue" onclick="savePart()" style="margin-top:0">💾 حفظ</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Oil Modal -->
+<div class="modal-overlay" id="oilModal">
+    <div class="modal">
+        <div class="modal-title">🛢️ إضافة نوع الزيت</div>
+        <div class="input-group">
+            <label>اسم الزيت</label>
+            <input type="text" id="oilName" placeholder="مثال: ELF 5W-30">
+        </div>
+        <div class="input-group">
+            <label>تاريخ التبديل</label>
+            <input type="date" id="oilDate">
+        </div>
+        <div class="input-group">
+            <label>الكيلومتر السابق</label>
+            <input type="number" id="oilKmPrev" placeholder="مثال: 80000">
+        </div>
+        <div class="input-group">
+            <label>الكيلومتر المقبل</label>
+            <input type="number" id="oilKmNext" placeholder="مثال: 85000">
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('oilModal')">إلغاء</button>
+            <button class="save-btn save-green" onclick="saveOil()" style="margin-top:0">💾 حفظ</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Note Modal -->
+<div class="modal-overlay" id="notesModal">
+    <div class="modal">
+        <div class="modal-title">📝 إضافة ملاحظة</div>
+        <div class="input-group">
+            <label>عنوان الملاحظة</label>
+            <input type="text" id="noteTitle" placeholder="مثال: صوت غريب في المحرك">
+        </div>
+        <div class="input-group">
+            <label>تفاصيل</label>
+            <textarea id="noteContent" rows="3" placeholder="اكتب تفاصيل الملاحظة هنا..." style="resize:vertical"></textarea>
+        </div>
+        <div class="modal-actions">
+            <button class="btn-cancel" onclick="closeModal('notesModal')">إلغاء</button>
+            <button class="save-btn save-yellow" onclick="saveNote()" style="margin-top:0">💾 حفظ</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===== DATA MANAGEMENT =====
+    function getData(key) {
+        try {
+            return JSON.parse(localStorage.getItem('clio4_' + key)) || [];
+        } catch(e) {
+            return [];
+        }
+    }
+
+    function setData(key, data) {
+        localStorage.setItem('clio4_' + key, JSON.stringify(data));
+    }
+
+    // ===== NAVIGATION =====
+    function showSection(name) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.fab').forEach(f => f.style.display = 'none');
+
+        if (name === 'main') {
+            document.getElementById('mainPage').classList.add('active');
+        } else if (name === 'docs') {
+            document.getElementById('docsSection').classList.add('active');
+            renderInsuranceList();
+            renderScannerList();
+        } else if (name === 'parts') {
+            document.getElementById('partsSection').classList.add('active');
+            document.getElementById('fabParts').style.display = 'block';
+            renderPartsList();
+        } else if (name === 'oil') {
+            document.getElementById('oilSection').classList.add('active');
+            document.getElementById('fabOil').style.display = 'block';
+            renderOilList();
+        } else if (name === 'notes') {
+            document.getElementById('notesSection').classList.add('active');
+            document.getElementById('fabNotes').style.display = 'block';
+            renderNotesList();
+        }
+    }
+
+    // ===== MODALS =====
+    function openModal(id) {
+        document.getElementById(id).classList.add('active');
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    });
+
+    // ===== FORMAT DATE =====
+    function formatDate(dateStr) {
+        if (!dateStr) return '---';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('ar-DZ', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    // ===== CHECK EXPIRY =====
+    function getStatus(endDate) {
+        if (!endDate) return { text: 'نشط', class: 'badge-active' };
+        const end = new Date(endDate);
+        const now = new Date();
+        if (end < now) return { text: 'منتهي', class: 'badge-expired' };
+        return { text: 'نشط', class: 'badge-active' };
+    }
+
+    // ===== INSURANCE =====
+    function saveInsurance() {
+        const start = document.getElementById('insStart').value;
+        const end = document.getElementById('insEnd').value;
+        if (!start || !end) { alert('يرجى ملء جميع الحقول'); return; }
+
+        const list = getData('insurance');
+        list.unshift({ id: Date.now(), start, end });
+        setData('insurance', list);
+
+        document.getElementById('insStart').value = '';
+        document.getElementById('insEnd').value = '';
+        renderInsuranceList();
+    }
+
+    function deleteInsurance(id) {
+        if (!confirm('هل تريد حذف هذا السجل؟')) return;
+        const list = getData('insurance').filter(i => i.id !== id);
+        setData('insurance', list);
+        renderInsuranceList();
+    }
+
+    function renderInsuranceList() {
+        const list = getData('insurance');
+        const container = document.getElementById('insuranceList');
+        if (list.length === 0) {
+            container.innerHTML = '<div class="empty-state"><div class="empty-icon">🛡️</div>لا توجد سجلات بعد</div>';
+            return;
+        }
+        container.innerHTML = list.map(item => {
+            const status = getStatus(item.end);
+            return `
+                <div class="doc-record insurance">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                        <strong>شهادة التأمين</strong>
+                        <span class="status-badge ${status.class}">${status.text}</span>
+                    </div>
+                    <div class="doc-dates">
+                        <span>📅 تبدأ: ${formatDate(item.start)}</span>
+                        <span>📅 تنتهي: ${formatDate(item.end)}</span>
+                    </div>
+                    <button class="doc-delete" onclick="deleteInsurance(${item.id})">🗑️ حذف</button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== SCANNER =====
+    function saveScanner() {
+        const start = document.getElementById('scanStart').value;
+        const end = document.getElementById('scanEnd').value;
+        if (!start || !end) { alert('يرجى ملء جميع الحقول'); return; }
+
+        const list = getData('scanner');
+        list.unshift({ id: Date.now(), start, end });
+        setData('scanner', list);
+
+        document.getElementById('scanStart').value = '';
+        document.getElementById('scanEnd').value = '';
+        renderScannerList();
+    }
+
+    function deleteScanner(id) {
+        if (!confirm('هل تريد حذف هذا السجل؟')) return;
+        const list = getData('scanner').filter(i => i.id !== id);
+        setData('scanner', list);
+        renderScannerList();
+    }
+
+    function renderScannerList() {
+        const list = getData('scanner');
+        const container = document.getElementById('scannerList');
+        if (list.length === 0) {
+            container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div>لا توجد سجلات بعد</div>';
+            return;
+        }
+        container.innerHTML = list.map(item => {
+            const status = getStatus(item.end);
+            return `
+                <div class="doc-record scanner">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                        <strong>فحص السكانير</strong>
+                        <span class="status-badge ${status.class}">${status.text}</span>
+                    </div>
+                    <div class="doc-dates">
+                        <span>📅 تبدأ: ${formatDate(item.start)}</span>
+                        <span>📅 تنتهي: ${formatDate(item.end)}</span>
+                    </div>
+                    <button class="doc-delete" onclick="deleteScanner(${item.id})">🗑️ حذف</button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ===== SPARE PARTS =====
+    function savePart() {
+        const name = document.getElementById('partName').value.trim();
+        const date = document.getElementById('partDate').value;
+        const km = document.getElementById('partKm').value;
+
+        if (!name || !date || !km) { alert('يرجى ملء جميع الحقول'); return; }
+
+        const list = getData('parts');
+        list.unshift({ id: Date.now(), name, date, km });
+        setData('parts', list);
+
+        document.getElementById('partName').value = '';
+        document.getElementById('partDate').value = '';
+        document.getElementById('partKm').value = '';
+        closeModal('partsModal');
+        renderPartsList();
+    }
+
+    function deletePart(id) {
+        if (!confirm('هل تريد حذف هذه القطعة؟')) return;
+        const list = getData('parts').filter(i => i.id !== id);
+        setData('parts', list);
+        renderPartsList();
+    }
+
+    function renderPartsList() {
+        const list = getData('parts');
+        const container = document.getElementById('partsList');
+        if (list.length === 0) {
+            container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔧</div>لا توجد قطع غيار مسجلة<br>اضغط + لإضافة قطعة</div>';
+            return;
+        }
+        container.innerHTML = list.map(item => `
+            <div class="list-item">
+                <button class="delete-btn" onclick="deletePart(${item.id})">✕</button>
+                <div class="item-name">🔩 ${item.name}</div>
+                <div class="item-detail">📅 تاريخ التبديل: ${formatDate(item.date)}</div>
+                <div class="item-detail">🛣️ الكيلومتر: ${Number(item.km).toLocaleString('ar-DZ')} كم</div>
+            </div>
+        `).join('');
+    }
+
+    // ===== OIL CHANGE =====
+    function saveOil() {
+        const name = document.getElementById('oilName').value.trim();
+        const date = document.getElementById('oilDate').value;
+        const kmPrev = document.getElementById('oilKmPrev').value;
+        const kmNext = document.getElementById('oilKmNext').value;
+
+        if (!name || !date || !kmPrev || !kmNext) { alert('يرجى ملء جميع الحقول'); return; }
+
+        const list = getData('oil');
+        list.unshift({ id: Date.now(), name, date, kmPrev, kmNext });
+        setData('oil', list);
+
+        document.getElementById('oilName').value = '';
+        document.getElementById('oilDate').value = '';
+        document.getElementById('oilKmPrev').value = '';
+        document.getElementById('oilKmNext').value = '';
+        closeModal('oilModal');
+        renderOilList();
+    }
+
+    function deleteOil(id) {
+        if (!confirm('هل تريد حذف هذا السجل؟')) return;
+        const list = getData('oil').filter(i => i.id !== id);
+        setData('oil', list);
+        renderOilList();
+    }
+
+    function renderOilList() {
+        const list = getData('oil');
+        const container = document.getElementById('oilList');
+        if (list.length === 0) {
+            container.innerHTML = '<div class="empty-state"><div class="empty-icon">🛢️</div>لا توجد سجلات تبديل الزيت<br>اضغط + لإضافة زيت</div>';
+            return;
+        }
+        container.innerHTML = list.map(item => `
+            <div class="list-item">
+                <button class="delete-btn" onclick="deleteOil(${item.id})">✕</button>
+                <div class="item-name">🛢️ ${item.name}</div>
+                <div class="item-detail">📅 تاريخ التبديل: ${formatDate(item.date)}</div>
+                <div class="item-detail">🛣️ كم السابق: ${Number(item.kmPrev).toLocaleString('ar-DZ')} كم</div>
+                <div class="item-detail">🛣️ كم المقبل: ${Number(item.kmNext).toLocaleString('ar-DZ')} كم</div>
+            </div>
+        `).join('');
+    }
+
+    // ===== NOTES =====
+    function saveNote() {
+        const title = document.getElementById('noteTitle').value.trim();
+        const content = document.getElementById('noteContent').value.trim();
+
+        if (!title) { alert('يرجى إدخال عنوان الملاحظة'); return; }
+
+        const list = getData('notes');
+        list.unshift({ id: Date.now(), title, content, date: new Date().toISOString() });
+        setData('notes', list);
+
+        document.getElementById('noteTitle').value = '';
+        document.getElementById('noteContent').value = '';
+        closeModal('notesModal');
+        renderNotesList();
+    }
+
+    function deleteNote(id) {
+        if (!confirm('هل تريد حذف هذه الملاحظة؟')) return;
+        const list = getData('notes').filter(i => i.id !== id);
+        setData('notes', list);
+        renderNotesList();
+    }
+
+    function renderNotesList() {
+        const list = getData('notes');
+        const container = document.getElementById('notesList');
+        if (list.length === 0) {
+            container.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div>لا توجد ملاحظات<br>اضغط + لإضافة ملاحظة</div>';
+            return;
+        }
+        container.innerHTML = list.map(item => `
+            <div class="list-item">
+                <button class="delete-btn" onclick="deleteNote(${item.id})">✕</button>
+                <div class="item-name">📌 ${item.title}</div>
+                ${item.content ? `<div class="item-detail" style="margin-top:6px;opacity:0.85;white-space:pre-wrap">${item.content}</div>` : ''}
+                <div class="item-detail" style="margin-top:8px">📅 ${formatDate(item.date)}</div>
+            </div>
+        `).join('');
+    }
+
+    // ===== INIT =====
+    // Pre-load any existing data when returning to sections
+</script>
+
+</body>
+</html>
